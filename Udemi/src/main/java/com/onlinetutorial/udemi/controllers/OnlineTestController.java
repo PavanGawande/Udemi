@@ -2,6 +2,8 @@ package com.onlinetutorial.udemi.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.onlinetutorial.udemi.beans.OnlineTestQuestionBean;
 import com.onlinetutorial.udemi.commons.Constants;
-import com.onlinetutorial.udemi.commons.CurrentUser;
+import com.onlinetutorial.udemi.commons.ValidationsUtils;
 import com.onlinetutorial.udemi.model.TestType;
 import com.onlinetutorial.udemi.validator.OnlineTestQuestionBeanValidator;
 import com.onlinetutorial.udemicontrollerservice.OnlineTestControllerService;
@@ -30,6 +32,9 @@ public class OnlineTestController {
 	@Autowired
 	private OnlineTestQuestionBeanValidator validator;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@InitBinder
 	public void InitBinder(WebDataBinder webDataBinder) {
 		webDataBinder.setValidator(validator);
@@ -38,8 +43,9 @@ public class OnlineTestController {
 	@Autowired
 	private OnlineTestControllerService onlineTestControllerService;
 	
-	@Autowired
-	private CurrentUser currentUser;
+	/*
+	 * @Autowired private CurrentUser currentUser;
+	 */
 	
 	@RequestMapping(value = "/savequestion", method = RequestMethod.GET)
 	public String addQuestion(Model model) {
@@ -114,5 +120,34 @@ public class OnlineTestController {
 	  
 		return "redirect:/savequestion";
 	}
-
+	
+	@RequestMapping(value = "/selecttest", method = RequestMethod.GET)
+	public String selectTestQuestion(Model model , @RequestParam("testTypeId")String testTypeId) {	
+		
+		System.out.println(testTypeId+"-----------------");
+		List<TestType> testTypeList = onlineTestControllerService.getAllTestType();
+		
+		if(ValidationsUtils.checkStringIsNullorEmpty(testTypeId)) {
+			
+			onlineTestControllerService.getTestQuestionByTestType(Long.parseLong(testTypeId));
+		}
+		
+		
+		model.addAttribute("testTypeList", testTypeList);
+	  
+		return "selecttest";
+	}
+	
+	
+	@RequestMapping(value = "/getQuestion", method = RequestMethod.GET)
+	public String showOptions(Model model) {
+		
+		model.addAttribute("testTime", 3600);
+	  
+	
+	  
+		return "onlineTest";
+	}
+	
+    
 }

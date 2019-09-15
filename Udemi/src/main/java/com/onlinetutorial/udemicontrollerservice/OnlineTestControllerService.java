@@ -12,5 +12,7 @@ public interface OnlineTestControllerService{
 	public void saveQueAnsOptionsFromExcel(OnlineTestQuestionBean onlineTestQuestionBean);
 
 	public List<TestType> getAllTestType();
+	
+	public List<OnlineTestQuestionBean> getTestQuestionByTestType(Long testTypeId);
 
 }

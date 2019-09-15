@@ -14,17 +14,14 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.onlinetutorial.udemi.beans.OnlineTestQuestionBean;
-import com.onlinetutorial.udemi.commons.CurrentUser;
 import com.onlinetutorial.udemi.dao.OnlineTestQuestionDao;
 import com.onlinetutorial.udemi.dao.TestTypeRepo;
 import com.onlinetutorial.udemi.model.OnlineTestQuestion;
 import com.onlinetutorial.udemi.model.QuestionOption;
 import com.onlinetutorial.udemi.model.TestType;
-import com.onlinetutorial.udemi.model.User;
 import com.onlinetutorial.udemi.service.OnlineTestService;
 
 @Service
@@ -32,10 +29,9 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 
 	@Autowired
 	private OnlineTestQuestionDao onlineTestQuestionDao;
-	
-	@Autowired
-	private CurrentUser currentUser;
-	
+	/*
+	 * @Autowired private CurrentUser currentUser;
+	 */
 	@Autowired 
 	private TestTypeRepo testTypeRepo;
 
@@ -189,6 +185,15 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 			
 		}
 		
+	}
+
+	@Override
+	public List<OnlineTestQuestionBean> getTestQuestionByTestType(Long testTypeId) {
+
+		Optional<TestType> testtype = testTypeRepo.findById(testTypeId);
+
+		List<OnlineTestQuestion> OnlineTestQuestionLst = onlineTestQuestionDao.findByTestType(testtype);
+		return null;
 	}
 
 }

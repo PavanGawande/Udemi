@@ -12,6 +12,11 @@
 	media="all" rel="stylesheet" type="text/css" />
 	<link href="${contextPath}/resources/css/common.css"
 	media="all" rel="stylesheet" type="text/css" />
+	
+	<link href="${contextPath}/resources/css/flipclock.css"
+	media="all" rel="stylesheet" type="text/css" />
+	
+	
 <link href="${contextPath}/resources/stylesheets/font-awesome.min.css"
 	media="all" rel="stylesheet" type="text/css" />
 <link href="${contextPath}/resources/stylesheets/se7en-font.css"
@@ -177,6 +182,10 @@
 	type="text/javascript"></script>
 <script src="${contextPath}/resources/javascripts/fitvids.js"
 	type="text/javascript"></script>
+	
+	<script src="${contextPath}/resources/javascripts/flipclock.js"
+	type="text/javascript"></script>
+	
 <script
 	src="${contextPath}/resources/javascripts/jquery.sparkline.min.js"
 	type="text/javascript"></script>

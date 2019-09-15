@@ -36,4 +36,10 @@ public class OnlineTestControllerServiceImpl implements OnlineTestControllerServ
 		
 		return testTypeService.getAllTestType();
 	}
+
+	@Override
+	public List<OnlineTestQuestionBean> getTestQuestionByTestType(Long testTypeId) {
+		
+		return onlineTestService.getTestQuestionByTestType(testTypeId);
+	}
 }

@@ -5,10 +5,15 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <div class="container-fluid main-content">
-	<div class="page-title" style="margin-top: 1%;">
+	<div class="page-title " style="margin-top: 1%;">
 
 		<h1>User Registration</h1>
+		<button class="start">Start Clock</button>
+		<button class="btn btn-lg btn-primary start">Primary</button>
+	<!-- <div class="message"></div> -->
+		
 	</div>
+	
 	<div class="row">
 		<div class="col-lg-12 ">
 			<div class="widget-container fluid-height clearfix stats-container">
@@ -53,20 +58,10 @@
 							</div>
 						</form>
 					</div>
-
-					
-						<div class="col-md-3">
-							<div class="number">
-								<div class="icon globe"></div>
-								86<small>%</small>
-							</div>
-							<div class="text">Overall growth</div>
-						</div>
 						
 						<div class="col-md-3">
 							<div class="number">
-								<div class="icon globe"></div>
-								86<small>%</small>
+								<div class="clock" style="margin:2em;"></div><small>% </small>
 							</div>
 							<div class="text">Overall growth</div>
 						</div>
@@ -93,5 +88,34 @@
 
 	</div>
 </div>
+	
+
+
+
+	<script type="text/javascript">
+		var clock;
+		var testTime = ${testTime};
+		
+		$(document).ready(function() {
+			
+			clock = $('.clock').FlipClock(testTime, {
+		        
+				clockFace: 'MinuteCounter',
+		        countdown: true,
+		        autoStart: false,
+		        callbacks: {
+		        	start: function() {
+		        		$('.message').html('The clock has started!');
+		        	}
+		        }
+		    });
+
+		    $('.start').click(function(e) {
+
+		    	clock.start();
+		    });
+
+		});
+	</script>
 
 <jsp:include page="/WEB-INF/jsps/commons/footer.jsp" />

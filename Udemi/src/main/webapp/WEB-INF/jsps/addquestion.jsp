@@ -23,11 +23,11 @@
 						<div class="form-group">
 							<label class="control-label col-md-2">Type Of Test</label>
 							<div class="col-md-7">
-								<select class="select2able" name="testType" id="testType">
+								<select class="select2able" name="courceId" id="courseId">
 								<option value="">Select the Test Type</option>
-								<c:forEach items="${testTypeList}" var="testType">
+								<c:forEach items="${courseLst}" var="course">
 								
-								    <option value="${testType.testTypeId}" ${testTypeId == testType.testTypeId ?'selected' : ''}>${testType.testType}</option>
+								    <option value="${course.courseId}" ${courseId == course.courseId ?'selected' : ''}>${course.course}</option>
 								</c:forEach>
 							
 								</select>
@@ -124,8 +124,8 @@ function sentOptionCountToBknd() {
 	
 	var optionsCount = document.getElementById("optionsCountField").value;
 	var question = document.getElementById("question").value;
-	var testType = document.getElementById("testType").value;
-	location.replace("${contextPath}/showoptionsfield?optionsCount="+optionsCount+"&question="+question+"&testType_id="+testType);
+	var courseId = document.getElementById("courseId").value;
+	location.replace("${contextPath}/showoptionsfield?optionsCount="+optionsCount+"&question="+question+"&courseId="+courseId);
 	
 }
  

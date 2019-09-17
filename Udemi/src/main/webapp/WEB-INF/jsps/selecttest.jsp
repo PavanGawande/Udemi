@@ -21,14 +21,24 @@
 						<div class="form-group">
 							<label class="control-label col-md-2">Type Of Test</label>
 							<div class="col-md-7">
-								<select class="select2able" name="testType" id="testType" onclick="handleSelect()">
+								<select class="select2able" name="testType" id="courceId" onclick="handleSelect()">
 								<option value="">Select the Test Type</option>
-								<c:forEach items="${testTypeList}" var="testType">
+								<c:forEach items="${courseLst}" var="cource">
 								
-								    <option value="${testType.testTypeId}" ${testTypeId == testType.testTypeId ?'selected' : ''}>${testType.testType}</option>
+								    <option value="${cource.courseId}" ${courceId == cource.courseId ?'selected' : ''}>${cource.course}</option>
 								</c:forEach>
 							
 								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-md-2">Select Question For Test</label>
+							<div class="col-md-7">
+							<c:forEach items="${onlineTestQuestionBeanLst}" var="onlineTestQuestionBean"> 
+							   <label class="checkbox"> <input type="checkbox" value="${onlineTestQuestionBean.questionId}"><span>${onlineTestQuestionBean.question}</span></label>
+							</c:forEach>
+								
 							</div>
 						</div>
 
@@ -54,9 +64,9 @@
 
 <script type="text/javascript">
 function handleSelect(){
-	var e = document.getElementById("testType");
-	var testTypeId = e.options[e.selectedIndex].value;
+	var e = document.getElementById("courceId");
+	var courceId = e.options[e.selectedIndex].value;
 	//alert(result); //ID002
-    location.replace("${contextPath}/selecttest?testTypeId="+testTypeId);
+    location.replace("${contextPath}/selecttest?courceId="+courceId);
 }
 </script>

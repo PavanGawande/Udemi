@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,8 +20,10 @@ import javax.validation.constraints.NotNull;
 @Table(name = "USER")
 public class User {
 	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "USER_SEQ")
+	@SequenceGenerator(name = "USER_SEQ" ,sequenceName = "USER_SEQ" ,allocationSize = 1)	
 	@Column(name = "USER_ID")
 	private Long userId;
 	

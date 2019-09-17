@@ -19,7 +19,7 @@ public class OnlineTestQuestionBean {
 	
 	private MultipartFile files;
 	
-	private String testType;
+	private String courceId;
 
 
 	public MultipartFile getFiles() {
@@ -29,13 +29,12 @@ public class OnlineTestQuestionBean {
 	public void setFiles(MultipartFile files) {
 		this.files = files;
 	}
-
-	public String getTestType() {
-		return testType;
+	public String getCourceId() {
+		return courceId;
 	}
 
-	public void setTestType(String testType) {
-		this.testType = testType;
+	public void setCourceId(String courceId) {
+		this.courceId = courceId;
 	}
 
 	public String getOptionsCount() {

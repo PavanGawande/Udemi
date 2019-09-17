@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +15,8 @@ import javax.persistence.Table;
 public class Email {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "EMAIL_SEQ")
+	@SequenceGenerator(name = "EMAIL_SEQ" ,sequenceName = "EMAIL_SEQ" ,allocationSize = 1)
 	@Column(name = "USER_ID")
 	private Long emailId;
 	

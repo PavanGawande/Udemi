@@ -17,11 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onlinetutorial.udemi.beans.OnlineTestQuestionBean;
+import com.onlinetutorial.udemi.dao.CourseRepo;
 import com.onlinetutorial.udemi.dao.OnlineTestQuestionDao;
-import com.onlinetutorial.udemi.dao.TestTypeRepo;
+import com.onlinetutorial.udemi.model.Course;
 import com.onlinetutorial.udemi.model.OnlineTestQuestion;
 import com.onlinetutorial.udemi.model.QuestionOption;
-import com.onlinetutorial.udemi.model.TestType;
 import com.onlinetutorial.udemi.service.OnlineTestService;
 
 @Service
@@ -33,18 +33,18 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 	 * @Autowired private CurrentUser currentUser;
 	 */
 	@Autowired 
-	private TestTypeRepo testTypeRepo;
+	private CourseRepo courseRepo;
 
 	@Override
 	public void saveQueAnsOptions(OnlineTestQuestionBean onlineTestQuestionBean) {
 		
 		OnlineTestQuestion question = new OnlineTestQuestion();
-		Optional<TestType> testType = testTypeRepo.findByTestTypeId(Long.parseLong(onlineTestQuestionBean.getTestType().trim()));
+		Optional<Course> courceLst = courseRepo.findByCourseId(Long.parseLong(onlineTestQuestionBean.getCourceId().trim()));
 		QuestionOption option ;
 		List<QuestionOption> optionLst = new ArrayList<>();
 		
 		/* Setting TestType data START */
-		question.setTestType(testType.get());
+		question.setCource(courceLst.get());
 		/* Setting TestType data START */
 		question.setQuestion(onlineTestQuestionBean.getQuestion());
 		int answerindex = 0;
@@ -190,10 +190,37 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 	@Override
 	public List<OnlineTestQuestionBean> getTestQuestionByTestType(Long testTypeId) {
 
-		Optional<TestType> testtype = testTypeRepo.findById(testTypeId);
+		Optional<Course> course = courseRepo.findById(testTypeId);
 
-		List<OnlineTestQuestion> OnlineTestQuestionLst = onlineTestQuestionDao.findByTestType(testtype);
-		return null;
+		List<OnlineTestQuestion> OnlineTestQuestionLst = onlineTestQuestionDao.findByCource(course);
+		OnlineTestQuestionBean onlineTestQuestionBean;
+		ArrayList<String> optionLst=null;
+		ArrayList<String> answerLst = null;
+		List<OnlineTestQuestionBean> onlineTestQuestionBeanLst = new ArrayList<OnlineTestQuestionBean>();
+		
+		for (OnlineTestQuestion onlineTestQuestion : OnlineTestQuestionLst) {
+			
+			onlineTestQuestionBean = new OnlineTestQuestionBean();
+			optionLst = new ArrayList<String>();
+			answerLst = new ArrayList<String>();
+			
+			
+			onlineTestQuestionBean.setQuestion(onlineTestQuestion.getQuestion());
+			onlineTestQuestionBean.setQuestionId(onlineTestQuestion.getQuestionId());
+			for (QuestionOption QuestionOption : onlineTestQuestion.getOptions()) {
+				
+				optionLst.add(QuestionOption.getMcq());
+				answerLst.add(QuestionOption.getIsAnswer());
+			}
+			onlineTestQuestionBean.setOptions(optionLst);
+			onlineTestQuestionBean.setAnswer(answerLst);
+
+			onlineTestQuestionBeanLst.add(onlineTestQuestionBean);
+		}
+		
+	       
+		
+		return onlineTestQuestionBeanLst;
 	}
 
 }

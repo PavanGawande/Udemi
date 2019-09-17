@@ -8,24 +8,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "TEST_TYPE")
-public class TestType {
+@Table(name = "COURSE")
+public class Course {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "TEST_TYPE_ID")
-	private Long testTypeId;
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "COURSE_SEQ")
+	@SequenceGenerator(name = "COURSE_SEQ" ,sequenceName = "COURSE_SEQ" ,allocationSize = 1)
+	@Column(name = "COURSE_ID")
+	private Long courseId;
 	
-	@Column(name = "TEST_TYPE")
-	private String testType;
+	@Column(name = "COURSE")
+	private String course;
 	
 	@Lob
-	@Column(name = "TEST_DESCRIPTION")
-	private String testDescribtion;
+	@Column(name = "COURCE_DESCRIPTION")
+	private String courseDescribtion;
 	
 	@Column(name = "UPDATED_DATE")
 	private Date updatedDate;
@@ -41,28 +43,21 @@ public class TestType {
 	@Column(name = "ENTER_BY")
 	private Long enterBy;
 	
-	public Long getTestTypeId() {
-		return testTypeId;
+	public Long getCourseId() {
+		return courseId;
 	}
 
-	public void setTestTypeId(Long testTypeId) {
-		this.testTypeId = testTypeId;
+	public void setCourseId(Long courseId) {
+		this.courseId = courseId;
 	}
 
-	public String getTestType() {
-		return testType;
+
+	public String getCourseDescribtion() {
+		return courseDescribtion;
 	}
 
-	public void setTestType(String testType) {
-		this.testType = testType;
-	}
-
-	public String getTestDescribtion() {
-		return testDescribtion;
-	}
-
-	public void setTestDescribtion(String testDescribtion) {
-		this.testDescribtion = testDescribtion;
+	public void setCourseDescribtion(String courseDescribtion) {
+		this.courseDescribtion = courseDescribtion;
 	}
 
 	public Date getUpdatedDate() {
@@ -95,6 +90,14 @@ public class TestType {
 
 	public void setEnterBy(Long enterBy) {
 		this.enterBy = enterBy;
+	}
+
+	public String getCourse() {
+		return course;
+	}
+
+	public void setCourse(String course) {
+		this.course = course;
 	}
 	
 	

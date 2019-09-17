@@ -8,14 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="OPTIONS_MCQ")
 public class QuestionOption {
 
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "OPTIONS_MCQ_SEQ")
+	@SequenceGenerator(name = "OPTIONS_MCQ_SEQ" ,sequenceName = "OPTIONS_MCQ_SEQ" ,allocationSize = 1)
 	@Column(name = "OPTION_ID")
 	private Long optionId;
 	

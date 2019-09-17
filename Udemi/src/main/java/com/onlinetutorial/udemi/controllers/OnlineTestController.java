@@ -5,8 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.onlinetutorial.udemi.beans.OnlineTestQuestionBean;
 import com.onlinetutorial.udemi.commons.Constants;
 import com.onlinetutorial.udemi.commons.ValidationsUtils;
-import com.onlinetutorial.udemi.model.TestType;
+import com.onlinetutorial.udemi.model.Course;
 import com.onlinetutorial.udemi.validator.OnlineTestQuestionBeanValidator;
 import com.onlinetutorial.udemicontrollerservice.OnlineTestControllerService;
 
@@ -52,9 +50,9 @@ public class OnlineTestController {
 		
 		OnlineTestQuestionBean onlineTestQuestionBean = new OnlineTestQuestionBean();		
 		Integer optionsCount = (Integer) model.asMap().get("optionsCount");	
-		Integer testTypeId = (Integer) model.asMap().get("testTypeId");	
+		Integer courseId = (Integer) model.asMap().get("courseId");	
 		
-		List<TestType> testTypeList = onlineTestControllerService.getAllTestType();
+		List<Course> courseLst = onlineTestControllerService.getAllCources();
 		
 		
 		if(optionsCount != null) {
@@ -70,8 +68,8 @@ public class OnlineTestController {
 		
 		
 		model.addAttribute("OnlineTestQuestionBean", onlineTestQuestionBean);
-		model.addAttribute("testTypeList", testTypeList);
-		model.addAttribute("testTypeId", testTypeId);
+		model.addAttribute("courseLst", courseLst);
+		model.addAttribute("courseId", courseId);
 		
 		return "addquestion";
 	}
@@ -111,29 +109,32 @@ public class OnlineTestController {
 	
 	@RequestMapping(value = "/showoptionsfield", method = RequestMethod.GET)
 	public String showOptions(@RequestParam("optionsCount") String optionsCount , @RequestParam("question")String question, 
-			                  @RequestParam("testType_id")String testTypeId, RedirectAttributes redirect) {
+			                  @RequestParam("courseId")String courceId, RedirectAttributes redirect) {
 		
 	  redirect.addFlashAttribute("optionsCount", Integer.parseInt(optionsCount));
 	  redirect.addFlashAttribute("question", question);
-	  redirect.addFlashAttribute("testTypeId", Integer.parseInt(testTypeId));
+	  redirect.addFlashAttribute("courseId", Integer.parseInt(courceId));
 	
 	  
 		return "redirect:/savequestion";
 	}
 	
 	@RequestMapping(value = "/selecttest", method = RequestMethod.GET)
-	public String selectTestQuestion(Model model , @RequestParam("testTypeId")String testTypeId) {	
+	public String selectTestQuestion(Model model , @RequestParam("courceId")String courceId) {	
 		
-		System.out.println(testTypeId+"-----------------");
-		List<TestType> testTypeList = onlineTestControllerService.getAllTestType();
+		Long courceId1 = Long.parseLong(courceId);
+		List<Course> courseLst = onlineTestControllerService.getAllCources();
+		List<OnlineTestQuestionBean> onlineTestQuestionBeanLst = null;
 		
-		if(ValidationsUtils.checkStringIsNullorEmpty(testTypeId)) {
+		if(!ValidationsUtils.checkStringIsNullorEmpty(courceId) && courceId1 != 0) {
 			
-			onlineTestControllerService.getTestQuestionByTestType(Long.parseLong(testTypeId));
+		 onlineTestQuestionBeanLst =onlineTestControllerService.getTestQuestionByTestType(courceId1);
 		}
 		
 		
-		model.addAttribute("testTypeList", testTypeList);
+		model.addAttribute("courseLst", courseLst);
+		model.addAttribute("courceId", courceId);
+		model.addAttribute("onlineTestQuestionBeanLst", onlineTestQuestionBeanLst);
 	  
 		return "selecttest";
 	}

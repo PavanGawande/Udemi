@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -15,8 +16,10 @@ import com.onlinetutorial.udemi.enums.RoleEnum;
 @Table(name = "ROLE")
 public class Role {
 
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "ROLE_SEQ")
+	@SequenceGenerator(name = "ROLE_SEQ" ,sequenceName = "ROLE_SEQ" ,allocationSize = 1)
 	@Column(name = "ROLE_ID")
 	private Long roleId;
 

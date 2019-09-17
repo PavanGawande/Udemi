@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.onlinetutorial.udemi.beans.OnlineTestQuestionBean;
-import com.onlinetutorial.udemi.model.TestType;
+import com.onlinetutorial.udemi.model.Course;
+import com.onlinetutorial.udemi.service.CourseService;
 import com.onlinetutorial.udemi.service.OnlineTestService;
-import com.onlinetutorial.udemi.service.TestTypeService;
 import com.onlinetutorial.udemicontrollerservice.OnlineTestControllerService;
 
 @Service
@@ -18,7 +18,7 @@ public class OnlineTestControllerServiceImpl implements OnlineTestControllerServ
 	private OnlineTestService onlineTestService;
 	
 	@Autowired
-	private TestTypeService testTypeService;
+	private CourseService courseService;
 	
 	public void saveQueAnsOptions(OnlineTestQuestionBean onlineTestQuestionBean) {
 		
@@ -32,9 +32,9 @@ public class OnlineTestControllerServiceImpl implements OnlineTestControllerServ
 	}
 	
 	@Override
-	public List<TestType> getAllTestType(){
+	public List<Course> getAllCources(){
 		
-		return testTypeService.getAllTestType();
+		return courseService.getAllCources();
 	}
 
 	@Override

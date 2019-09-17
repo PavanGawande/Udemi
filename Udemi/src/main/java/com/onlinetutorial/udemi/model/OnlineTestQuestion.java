@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -22,8 +23,10 @@ import javax.validation.constraints.Null;
 public class OnlineTestQuestion implements Serializable {
      
 	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "QUESTION_SEQ")
+	@SequenceGenerator(name = "QUESTION_SEQ" ,sequenceName = "QUESTION_SEQ" ,allocationSize = 1)
 	@Column(name = "QUESTION_ID")
 	private Long questionId;
 	
@@ -48,8 +51,8 @@ public class OnlineTestQuestion implements Serializable {
 	private Long updatedBy;
 	
 	@ManyToOne(optional = false)
-    @JoinColumn(name = "TEST_TYPE_ID")
-	private TestType testType;
+    @JoinColumn(name = "COURE_ID")
+	private Course cource;
 	
 	public Long getUpdatedBy() {
 		return updatedBy;
@@ -108,21 +111,14 @@ public class OnlineTestQuestion implements Serializable {
 	public void setOptions(List<QuestionOption> options) {
 		this.options = options;
 	}
-	
-	
-	public TestType getTestType() {
-		return testType;
+
+	public Course getCource() {
+		return cource;
 	}
 
-	public void setTestType(TestType testType) {
-		this.testType = testType;
+	public void setCource(Course cource) {
+		this.cource = cource;
 	}
-
-
-	/*
-	 * public List<Answer> getAnswer() { return answer; }
-	 * 
-	 * public void setAnswer(List<Answer> answer) { this.answer = answer; }
-	 */
+	
 	
 }
